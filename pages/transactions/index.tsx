@@ -263,8 +263,11 @@ const mapRes = (res) => {
                       </td>
                       <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
                         
-                        {/* { moment( item.block_timestamp ).fromNow() } */}
-                                                {Date((item.block_timestamp) * 1000)}
+                        { moment.unix( item.block_timestamp ).fromNow() }
+                        {/* { moment.unix(item.block_timestamp).format("L") } */}
+                        {/* { Date( ( item.block_timestamp ) * 1000 ) } */}
+                        {/* {item.block_timestamp } */}
+                    
 
                       </td>
                     </tr>
