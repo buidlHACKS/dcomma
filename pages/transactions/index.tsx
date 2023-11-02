@@ -225,7 +225,7 @@ const mapRes = (res) => {
                       </td>
                       <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
                         <div className="flex items-center justify-between ">
-                          <p>{item.from_address_label || item.from_address}</p>
+                          <p>{item.from_address_label || item.from_address.substring(0, 15)}...</p>
                           {getIsOut(item, address) ? (
                             <span className="px-2 py-1 text-xs text-white bg-yellow-300 rounded ">
                               OUT

@@ -56,7 +56,7 @@ export const getTo = ( tx: Transaction ) =>
     if (tx.log_events[0] && tx.log_events[0].sender_contract_ticker_symbol) {
     return `${tx.log_events[0].sender_contract_ticker_symbol}:${tx.log_events[0].sender_name}`;
   } else {
-    return tx.to_address_label || `${tx.to_address.substring(0, 15)}...`;
+    return tx.to_address_label || `${tx.to_address}`;
   }
   } catch (error) {
     console.log(error)
