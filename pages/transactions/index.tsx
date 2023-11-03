@@ -12,6 +12,7 @@ import {
   getTo,
   countTotalInOut,
   getIsOut,
+  getMappingChains,
 } from "../../utils/index";
 import { SimpleCard } from "../../components/shared/SimpleCard";
 
@@ -65,7 +66,10 @@ export interface TransfersResults {
 
 export const IndexPage = () => {
   const { selectedChainId, address } = useContext(AppContext);
-  const [items, setItems] = useState<Transaction[]>([]);
+  const [ items, setItems ] = useState<Transaction[]>( [] );
+  
+  
+
 
   // const [itemsNew, setItemsNew] = useState<Transaction[]>([]);
   const [ isLoading, setIsLoading ] = useState( false );
@@ -108,8 +112,9 @@ const mapRes = (res) => {
   ];
 
   useEffect(() => {
-    if (address) fetchTransaction();
-   
+    if ( address ) fetchTransaction();
+    // if (address ) alert(getMappingChains(selectedChainId))
+  
   }, [address, selectedChainId]);
 
 
@@ -123,7 +128,7 @@ const mapRes = (res) => {
     setItems([]);
     setIsLoading(true);
     do {
-      result = await reqTransactions( address);
+      result = await reqTransactions( address,  getMappingChains(selectedChainId) );
       data = data.concat(result?.data?.items || []);
      
       // setItems(mapRes(res))

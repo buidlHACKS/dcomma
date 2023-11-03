@@ -12,8 +12,8 @@ export const useFetchChains = () => {
     reqChains()
       .then(response => {
         setAllChains( response?.data?.items || [] );
-        console.log("all chains data =======>>>>>>>>>>>>",response?.data?.items)
-        setSelectedChainId("80001");
+        // console.log("all chains data =======>>>>>>>>>>>>",response?.data?.items)
+        setSelectedChainId("250");
       })
       .finally(() => {
         setIsLoadingChains(false);

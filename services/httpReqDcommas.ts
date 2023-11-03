@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'query-string';
 
-const covalent_api = "https://datalayer.decommas.net/datalayer/api/v1/";
+const dcommas_api = "https://datalayer.decommas.net/datalayer/api/v1/";
 const API_KEY = "9de81da143935703a5234c3fb8e571d8fbc0e1e3";
 
 const sendRequest = async (config: {
@@ -12,7 +12,8 @@ const sendRequest = async (config: {
   body?: any;
 }) => {
   try {
-    const response = await axios.get(qs.stringifyUrl({ url: covalent_api + config.url, query: config.query }), {
+    const response = await axios.get(qs.stringifyUrl({ url: dcommas_api + config.url, query: config.query }), {
+    // const response = await axios.get(qs.stringifyUrl({ url: dcommas_api + config.url  }), {
       method: config.type || "GET",
       headers: config.headers,
     });
@@ -23,29 +24,51 @@ const sendRequest = async (config: {
   }
 };
 
+export const reqTransactions = ( address: string, chainname: string ) =>
+{
+  try {
+    return sendRequest( {
+    url: `transactions/${ address }?networks=${ chainname }&api-key=${ API_KEY }`,
+        // url: `transactions/${ address }?networks=${ chainname }&api-key=${ API_KEY }`,
+
+    // query:`networks=${ chainname }&api-key=${ API_KEY }`,
+  });
+  } catch (error) {
+    console.log(error)
+  }
+  
+};
+
+export const reqFolio = (chainname: string, address: string) => {
+  return sendRequest({
+    url: `tokens/${ address }?networks=${ chainname }&api-key=${ API_KEY }`,
+  });
+};
+
+export const reqBalanceOfAddress = ( chainname: string, address: string ) =>
+{
+try {
+   return sendRequest({
+    //  url: `coins/${ address }?&api-key=${ API_KEY }`,
+     url: `coins/${ address }?networks=${ chainname }&api-key=${ API_KEY }`,
+  });
+} catch (error) {
+  console.log("reqbalance error ==========>>>>>",error)
+}
+ 
+};
+
 export const reqChains = () => {
   return sendRequest({
     url: `chains/status/?key=${API_KEY}&format=JSON`,
   });
 };
 
-export const reqBalanceOfAddress = (chainId: string, address: string) => {
-  return sendRequest({
-    url: `${chainId}/address/${address}/balances_v2/?key=${API_KEY}&format=JSON`,
-  });
-};
 
-export const reqFolio = (chainId: string, address: string) => {
-  return sendRequest({
-    url: `${chainId}/address/${address}/portfolio_v2/?key=${API_KEY}&format=JSON`,
-  });
-};
 
-export const reqTransactions = (address: string) => {
-  return sendRequest({
-    url: `transactions/${address}?api-key=${API_KEY}`,
-  });
-};
+
+
+
 
 export const reqEvents = (
   chainId: string,

@@ -3,23 +3,24 @@ import AppContext from "../AppContext";
 import AppLayout from "../components/layout/AppLayout";
 import Portfolio from "../components/shared/Portfolio";
 import { SimpleCard } from "../components/shared/SimpleCard";
-import { reqBalanceOfAddress, reqFolio } from "../services/httpReq";
+import { reqBalanceOfAddress, reqFolio } from "../services/httpReqDcommas";
 import {
-  calculateDiffValue,
+  // calculateDiffValue,
   calculateHoldings,
   countTotalBalance,
   formatBalance,
   formatNumber,
+  getMappingChains,
 } from "../utils";
 import PackToken from "../components/shared/PackToken";
 
 export interface TokenBalance {
-  balance: string;
+  amount: string;
   balance_24h: string;
-  contract_address: string;
-  contract_decimals: number;
-  contract_name: string;
-  contract_ticker_symbol: string;
+  address: string;
+  decimals: number;
+  name: string;
+  symbol: string;
   last_transferred_at: string;
   logo_url: string;
   nft_data: string;
@@ -53,16 +54,19 @@ export default () => {
     setIsLoadingFolio(true);
     setIsLoadingBalance(true);
     setItems([]);
-    reqFolio(selectedChainId, address)
+    reqFolio(getMappingChains(selectedChainId), address)
       .then(response => {
-        SetFolios(response?.data?.items || []);
+        SetFolios( response?.result || [] );
+        console.log("portfolio response",response.result)
       })
       .finally(() => {
         setIsLoadingFolio(false);
       });
-    reqBalanceOfAddress(selectedChainId, address)
+    reqBalanceOfAddress(getMappingChains(selectedChainId), address)
       .then(response => {
-        setItems(response?.data?.items || []);
+        setItems(  response?.result || [] );
+                console.log("balance response",response.result)
+
       })
       .finally(() => {
         setIsLoadingBalance(false);
@@ -70,8 +74,8 @@ export default () => {
   }, [address, selectedChainId]);
 
   const holdings = calculateHoldings(folios);
-  const diff = calculateDiffValue(holdings);
-  const percent = (diff * 100) / holdings[holdings.length - 1]?.close;
+  // const diff = calculateDiffValue(holdings);
+  // const percent = (diff * 100) / holdings[holdings.length - 1]?.close;
 
   return (
     <AppLayout
@@ -82,7 +86,7 @@ export default () => {
         <div className="flex flex-col items-start w-full gap-4 lg:flex-row ">
           <div ref={ref} className="flex items-center w-full gap-4">
             <div className="flex flex-col w-full gap-4">
-              <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+              {/* <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
                 <div className="w-full">
                   <SimpleCard
                     isLoading={isLoadingBalance}
@@ -117,7 +121,7 @@ export default () => {
                     }
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="overflow-x-auto text-gray-500 bg-white dark:text-gray-200 dark:bg-gray-700 rounded-xl">
                 <div className="flex items-center w-full gap-4 p-4 border-b border-b-gray-200">
                   <img src="/images/folio.svg" />
@@ -149,7 +153,7 @@ export default () => {
                     {items.map((item, index) => {
                       return (
                         <tr
-                          key={item.contract_address || ""}
+                          key={item.address || ""}
                           className="border-b border-gray-200 rounded-xl"
                         >
                           <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
@@ -167,16 +171,16 @@ export default () => {
                             />
                           </td>
                           <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
-                            {item.contract_ticker_symbol}
+                            {item.symbol}
                           </td>
                           <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
-                            {item.contract_name}
+                            {item.name}
                           </td>
 
                           <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
                             {formatBalance(
-                              item.balance,
-                              item.contract_decimals
+                              item.amount,
+                              item.decimals
                             )}
                           </td>
                           <td className="px-5 py-5 text-sm font-bold text-gray-800 bg-white dark:bg-gray-700">
@@ -216,13 +220,13 @@ export default () => {
                 <img src="/images/chart.svg" />
                 <p className="text-lg text-gray-500 dark:text-white">Chart</p>
               </div>
-              <Portfolio
+              {/* <Portfolio
                 isLoading={isLoadingFolio}
                 items={holdings.reverse()}
                 //@ts-ignore
                 width={ref?.current?.clientWidth || 600}
                 height={400}
-              />
+              /> */}
             </div>
             <div className="bg-white dark:bg-gray-700 rounded-xl">
               <div className="flex items-center w-full gap-4 p-4">

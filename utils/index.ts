@@ -107,10 +107,10 @@ export const calculateHoldings = ( items: TokenBalance[] ) =>
     let close = 0;
     items.forEach(item => {
       //We exclude the token (SCAM)
-      if (!excluded.includes(item.contract_address)) {
+      if (!excluded.includes(item.address)) {
         if (item?.holdings[index]?.close?.quote === null) {
           console.log("by");
-          excluded.push(item.contract_address);
+          excluded.push(item.address);
         } else {
           close = close + item?.holdings[index]?.close?.quote || 0;
         }
@@ -142,18 +142,19 @@ export const calculateActualValue = (
   return holdings[0]?.close || 0;
 };
 
-export const calculateDiffValue = (
-  holdings: {
-    close: number;
-    timestamp: string;
-  }[]
-) => {
-  if (holdings.length < 1) {
-    return 0;
-  }
+// export const calculateDiffValue = (
 
-  return (holdings[0]?.close || 0) - holdings[holdings.length - 1]?.close;
-};
+//   holdings: {
+//     close: number;
+//     timestamp: string;
+//   }[]
+// ) => {
+//   if (holdings.length < 1) {
+//     return 0;
+//   }
+
+//   return (holdings[0]?.close || 0) - holdings[holdings.length - 1]?.close;
+// };
 
 /**
  * Return the total value from token list
@@ -386,7 +387,34 @@ export const getMappingCurrency = (chainId: string) => {
       return "AVAX";
     case "80001":
       return "Matic";
+    case "250":
+      return "FTM";
     default:
       break;
   }
 };
+
+export const getMappingChains = ( chainId: string ) =>
+{
+  switch ( chainId )
+  {
+    case "1":
+      return "mainnet";
+    case "56":
+      return "bsc";
+    case "137":
+      return "polygon";
+    case "43114":
+      return "avalanche";
+    case "10":
+      return "optimism";
+    case "250":
+      return "fantom";
+    case "100":
+      return "gnosis";
+    case "80001":
+      return "mumbai";
+    default:
+      break;
+  }
+}
