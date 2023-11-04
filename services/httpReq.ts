@@ -37,7 +37,7 @@ export const reqBalanceOfAddress = (chainId: string, address: string) => {
 export const reqFolio = (chainId: string, address: string) => {
   return sendRequest({
     url: `${chainId}/address/${address}/portfolio_v2/?key=${API_KEY}&format=JSON`,
-  });
+  } );
 };
 
 export const reqTransactions = (

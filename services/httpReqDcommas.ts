@@ -19,8 +19,21 @@ const sendRequest = async (config: {
     });
 
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch ( error )
+  {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // other than 2xx (e.g., 404, 500).
+      console.log('Error response data:', error.response.data);
+      console.log('Status code:', error.response.status);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.log('No response received:', error.request);
+    } else {
+      // Something happened in setting up the request that triggered the error
+      console.log('Error message:', error.message);
+    }
+  
   }
 };
 
@@ -41,7 +54,7 @@ export const reqTransactions = ( address: string, chainname: string ) =>
 
 export const reqFolio = (chainname: string, address: string) => {
   return sendRequest({
-    url: `tokens/${ address }?networks=${ chainname }&api-key=${ API_KEY }`,
+    url: `tokens/${ address }?networks=${ chainname }&verified=true&api-key=${ API_KEY }`,
   });
 };
 
@@ -95,11 +108,19 @@ export const reqNFTs = (chainId: string, contract: string) => {
   });
 };
 
-export const reqAllNFTs = (chainId: string, pageNumber: number = 0) => {
+export const reqAllNFTs = ( chainname: string, contract_address: string, token_id: string) => {
   return sendRequest({
-    url: `${chainId}/nft_market/?key=${API_KEY}&format=JSON&page-number=${pageNumber}`,
-  });
+    url: `nft_metadata/${chainname}/${contract_address}/${token_id}?api-key=${API_KEY}`,
+  } );
 };
+
+export const reqNFTAddress = ( address: string) => {
+  return sendRequest({
+    url: `nfts/${address}/?api-key=${API_KEY}`,
+  } );
+};
+
+
 
 export const reqDetailsNFT = (chainId: string, contract: string) => {
   return sendRequest({

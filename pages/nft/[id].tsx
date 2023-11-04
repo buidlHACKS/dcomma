@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { NFTCollection } from ".";
 import AppContext from "../../AppContext";
 import AppLayout from "../../components/layout/AppLayout";
-import { reqAllNFTs, reqDetailsNFT, reqNFTs } from "../../services/httpReq";
+import { reqAllNFTs, reqDetailsNFT, reqNFTs } from "../../services/httpReqDcommas";
 import { formatNumber } from "../../utils";
 
 interface Data {
@@ -56,7 +56,7 @@ export const IndexPageNFT = () => {
     Promise.all([
       reqNFTs(selectedChainId, id as string),
       reqDetailsNFT(selectedChainId, id as string),
-      reqAllNFTs(selectedChainId, 0),
+      reqAllNFTs(address),
     ])
       .then(values => {
         setItems(values[0]?.data?.items || []);

@@ -142,19 +142,18 @@ export const calculateActualValue = (
   return holdings[0]?.close || 0;
 };
 
-// export const calculateDiffValue = (
+export const calculateDiffValue = (
+  
+  holdings: {
+    close: number;
+    timestamp: string;
+  }[]
+) => {
+  if (holdings.length < 1) {
+    return 0;
+  }
 
-//   holdings: {
-//     close: number;
-//     timestamp: string;
-//   }[]
-// ) => {
-//   if (holdings.length < 1) {
-//     return 0;
-//   }
-
-//   return (holdings[0]?.close || 0) - holdings[holdings.length - 1]?.close;
-// };
+};
 
 /**
  * Return the total value from token list
@@ -210,6 +209,13 @@ export const toThousands = (
         return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, `$1${delimiter}`);
       }
     }, "");
+};
+
+export const formatValue = (balance: any, actualPrice: any) => {
+  const bal = new BigNumber(balance);
+  const ap = parseFloat(actualPrice);
+  const result = ap * bal.toNumber();
+  return result.toFixed(2);
 };
 
 export const formatBalance = (
@@ -389,6 +395,8 @@ export const getMappingCurrency = (chainId: string) => {
       return "Matic";
     case "250":
       return "FTM";
+    case "42161":
+      return "ETH";
     default:
       break;
   }
@@ -414,6 +422,8 @@ export const getMappingChains = ( chainId: string ) =>
       return "gnosis";
     case "80001":
       return "mumbai";
+    case "42161":
+      return "arbitrum";
     default:
       break;
   }
