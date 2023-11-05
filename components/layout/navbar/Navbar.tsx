@@ -216,7 +216,7 @@ export const Navbar = () => {
   return (
     <nav className="h-screen px-6 pt-4 bg-white w-72 rounded-2xl dark:bg-gray-700">
       <div className="py-2 my-4 mb-8 ">
-       <img src="https://i.imgur.com/kJ1M74H.png"></img>
+       <img width={"85%"}  src="https://i.imgur.com/kJ1M74H.png"></img>
       </div>
 
       {sections.map(section => {

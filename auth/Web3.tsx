@@ -15,7 +15,7 @@ import
 
 
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { mainnet, goerli, polygon, arbitrum} from '@wagmi/core/chains'
+import { mainnet, goerli, polygon, arbitrum, bsc, optimism, fantom, avalanche} from '@wagmi/core/chains'
 
 import { publicProvider } from 'wagmi/providers/public'
 import { ReactNode } from 'react'
@@ -39,7 +39,7 @@ interface Props {
 }
 
 const { chains, publicClient } = configureChains(
-  [mainnet, goerli, polygon, arbitrum],
+  [mainnet, polygon, arbitrum, bsc, optimism, fantom, avalanche],
   [
     alchemyProvider({ apiKey: "45654654654" }),
     publicProvider()
