@@ -169,7 +169,7 @@ const AppHeader = () => {
                 </>
               ) }
               
-              <ConnectButton />
+              {/* <ConnectButton /> */}
 
             </form>
 

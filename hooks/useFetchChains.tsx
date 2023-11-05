@@ -22,7 +22,7 @@ import { reqChains } from "../services/httpReq";
   has_data: boolean;
 }
 export const useFetchChains = () => {
-  const [selectedChainId, setSelectedChainId] = useState("1");
+  const [selectedChainId, setSelectedChainId] = useState(1);
   const [allChains, setAllChains] = useState<ChainObject[]>([]);
   const [isLoadingChains, setIsLoadingChains] = useState(false);
 
@@ -290,7 +290,7 @@ const chainObj: ChainObject[] = [
          console.log("all chains data =======>>>>>>>>>>>>",response?.data?.items)
              setAllChains( chainObj )
 
-        setSelectedChainId("1");
+        setSelectedChainId(1);
       })
         .finally( () =>
         {
