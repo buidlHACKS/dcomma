@@ -4,6 +4,8 @@ import "../global.css";
 import { ThemeProvider } from "next-themes";
 import AppContext from "../AppContext";
 import { useFetchChains } from "../hooks/useFetchChains";
+import { Web3Provider } from "../auth/Web3";
+
 
 const App: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const { isLoadingChains, allChains, selectedChainId, setSelectedChainId } =
@@ -21,8 +23,11 @@ const App: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
         isLoadingChains,
       }}
     >
-      <ThemeProvider enableSystem={false} attribute="class">
-        <Component {...pageProps} />
+      <ThemeProvider enableSystem={ false } attribute="class">
+        <Web3Provider>
+
+          <Component { ...pageProps } />
+          </Web3Provider>
       </ThemeProvider>
     </AppContext.Provider>
   );

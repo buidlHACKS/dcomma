@@ -381,11 +381,11 @@ export const replaceAll = (str: string, find: string, replace: any) => {
   );
 };
 
-export const getMappingCurrency = (chainId: string) => {
+export const getMappingCurrency = (chainId: any) => {
   switch (chainId) {
-    case "1":
+    case 1:
       return "ETH";
-    case "56":
+    case 56:
       return "BNB";
     case "137":
       return "MATIC";

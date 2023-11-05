@@ -6,6 +6,8 @@ import { Button } from "../../shared/form/Button";
 import { sections } from "../navbar/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 const AppHeader = () => {
   const { theme, setTheme } = useTheme();
@@ -98,7 +100,7 @@ const AppHeader = () => {
         <div className="relative flex items-center w-full pl-1 lg:max-w-68 sm:pr-2 sm:ml-0">
           <div className="container relative left-0 z-50 flex justify-between w-full h-full lg:w-4/5">
             <form
-              className="flex items-center w-3/4 gap-4 ml-4 lg:w-3/4"
+              className="flex items-center w-3/4 gap-4 ml-4 lg:w-11/12"
               noValidate
               onSubmit={e => onSubmit(e)}
             >
@@ -165,11 +167,18 @@ const AppHeader = () => {
                     </button>
                   </div>
                 </>
-              )}
+              ) }
+              
+              <ConnectButton />
+
             </form>
+
           </div>
+
           <div className="relative flex items-center justify-end w-1/4 lg:hidden sm:mr-0 sm:right-auto">
+
             <div className="z-10 flex flex-row-reverse ml-4 mr-4 text-gray-800">
+
               <button
                 className="hamburger"
                 onClick={() => {
@@ -227,6 +236,7 @@ const AppHeader = () => {
                 ></path>
               </svg>
             </button>
+            
           </div>
         </div>
       </div>

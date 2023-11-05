@@ -133,7 +133,7 @@ export const Select = ({
                           />
                         )} */}
 
-                        <span className="block ml-7 font-normal truncate">
+                        <span className="block ml-7 font-normal capitalize truncate">
                           {option.label}
                         </span>
                       </button>
