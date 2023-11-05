@@ -57,13 +57,13 @@ export const Select = ({
           {selectedIem ? (
             <div className="flex items-center justify-between">
               <span className="flex items-center">
-                {selectedIem.img && (
+                {/* {selectedIem.img && (
                   <img
                     src={selectedIem.img}
                     alt="person"
                     className="flex-shrink-0 w-6 h-6 rounded-full"
                   />
-                )}
+                )} */}
 
                 <span className="block ml-3 truncate">{selectedIem.label}</span>
               </span>
@@ -125,15 +125,15 @@ export const Select = ({
                         }}
                         className="flex items-center w-full py-2 pl-3"
                       >
-                        {option.img && (
+                        {/* {option.img && (
                           <img
                             src={option.img}
                             alt="person"
                             className="flex-shrink-0 w-6 h-6 rounded-full"
                           />
-                        )}
+                        )} */}
 
-                        <span className="block ml-3 font-normal truncate">
+                        <span className="block ml-7 font-normal truncate">
                           {option.label}
                         </span>
                       </button>

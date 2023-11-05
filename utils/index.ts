@@ -142,18 +142,18 @@ export const calculateActualValue = (
   return holdings[0]?.close || 0;
 };
 
-export const calculateDiffValue = (
+// export const calculateDiffValue = (
   
-  holdings: {
-    close: number;
-    timestamp: string;
-  }[]
-) => {
-  if (holdings.length < 1) {
-    return 0;
-  }
+//   holdings: {
+//     close: number;
+//     timestamp: string;
+//   }[]
+// ) => {
+//   if (holdings.length < 1) {
+//     return 0;
+//   }
 
-};
+// };
 
 /**
  * Return the total value from token list
@@ -402,27 +402,28 @@ export const getMappingCurrency = (chainId: string) => {
   }
 };
 
-export const getMappingChains = ( chainId: string ) =>
+export const getMappingChains = async( chainId: any ) =>
 {
+  console.log("line 407",chainId)
   switch ( chainId )
   {
-    case "1":
+    case 1:
       return "mainnet";
-    case "56":
+    case 56:
       return "bsc";
-    case "137":
+    case 137:
       return "polygon";
-    case "43114":
+    case 43114:
       return "avalanche";
-    case "10":
+    case 10:
       return "optimism";
-    case "250":
+    case 250:
       return "fantom";
-    case "100":
+    case 100:
       return "gnosis";
-    case "80001":
+    case 80001:
       return "mumbai";
-    case "42161":
+    case 42161:
       return "arbitrum";
     default:
       break;

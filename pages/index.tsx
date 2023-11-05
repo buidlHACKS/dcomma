@@ -5,7 +5,7 @@ import Portfolio from "../components/shared/Portfolio";
 import { SimpleCard } from "../components/shared/SimpleCard";
 import { reqBalanceOfAddress, reqFolio } from "../services/httpReqDcommas";
 import {
-  calculateDiffValue,
+  // calculateDiffValue,
   calculateHoldings,
   countTotalBalance,
   formatBalance,
@@ -51,16 +51,26 @@ export default () => {
     { name: "Symbol" },
     { name: "Name" },
     { name: "Balance" },
+    { name: "Actual Price" },
     { name: "Value " },
   ];
 
+
+
   useEffect( () =>
   {
-    try {
+
+    async function getData() {
+       try {
        setIsLoadingFolio(true);
     setIsLoadingBalance(true);
-    setItems([]);
-    reqFolio(getMappingChains(selectedChainId), address)
+      setItems( [] );
+      // console.log( "selected chain id ====>>>>>>", getMappingChains( selectedChainId ) )
+         const chainid = await getMappingChains( selectedChainId )
+         console.log( "selected slected id ====>>>>>>", selectedChainId )
+          console.log( "selected chain id ====>>>>>>",  chainid  )
+
+    reqFolio(chainid, address)
       .then(response => {
         SetFolios( response?.result || [] );
           // console.log("portfolio response",response.result)
@@ -81,12 +91,14 @@ export default () => {
     } catch (error) {
       console.error("main error ====>>>>>>",error)
     }
+    }
+   getData()
    
   }, [address, selectedChainId]);
 
   const holdings = calculateHoldings(folios);
-  const diff = calculateDiffValue(holdings);
-  const percent = (diff * 100) / holdings[holdings.length - 1]?.close;
+  // const diff = calculateDiffValue(holdings);
+  // const percent = (diff * 100) / holdings[holdings.length - 1]?.close;
 
   return (
     <AppLayout
@@ -97,7 +109,7 @@ export default () => {
         <div className="flex flex-col items-start w-full gap-4 lg:flex-row ">
           <div ref={ref} className="flex items-center w-full gap-4">
             <div className="flex flex-col w-full gap-4">
-              <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+              {/* <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
                 <div className="w-full">
                   <SimpleCard
                     isLoading={isLoadingBalance}
@@ -132,7 +144,7 @@ export default () => {
                     }
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="overflow-x-auto text-gray-500 bg-white dark:text-gray-200 dark:bg-gray-700 rounded-xl">
                 <div className="flex items-center w-full gap-4 p-4 border-b border-b-gray-200">
                   <img src="/images/folio.svg" />
@@ -195,6 +207,9 @@ export default () => {
                             )}
                           </td>
                           <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
+                            {item.actual_price}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white dark:bg-gray-700">
                             {/* ${ ( ( item.actual_price ) * ( BigNumber( item.amount ) ) ).toFixed( 2 ) } */}
                             {/* ${( item.actual_price ) * ( BigNumber( item.amount ) ).toFixed( 2 ) } */}
 
@@ -229,19 +244,19 @@ export default () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col w-1/2 gap-4">
+          {/* <div className="flex flex-col w-1/2 gap-4">
             <div className="bg-white dark:bg-gray-700 rounded-xl">
               <div className="flex items-center w-full gap-4 p-4">
                 <img src="/images/chart.svg" />
                 <p className="text-lg text-gray-500 dark:text-white">Chart</p>
               </div>
-              {/* <Portfolio
+              <Portfolio
                 isLoading={isLoadingFolio}
                 items={holdings.reverse()}
                 //@ts-ignore
                 width={ref?.current?.clientWidth || 600}
                 height={400}
-              /> */}
+              />
             </div>
             <div className="bg-white dark:bg-gray-700 rounded-xl">
               <div className="flex items-center w-full gap-4 p-4">
@@ -265,7 +280,7 @@ export default () => {
                 height={400}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </AppLayout>

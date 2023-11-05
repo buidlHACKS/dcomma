@@ -120,15 +120,23 @@ const mapRes = (res) => {
 
 
 
-  const fetchTransaction = async () => {
-    let data = [];
+  const fetchTransaction = async () =>
+  {
+    try
+    {
+      async function getData ()
+      { 
+         let data = [];
     let result: { data: TransfersResults } = { data: { items: [] } };
 
     let pageNumber = 0;
     setItems([]);
     setIsLoading(true);
-    do {
-      result = await reqTransactions( address,  getMappingChains(selectedChainId) );
+        do
+        {
+               const chainid = await getMappingChains( selectedChainId )
+
+      result = await reqTransactions( address, chainid );
       data = data.concat(result?.data?.items || []);
      
       // setItems(mapRes(res))
@@ -136,8 +144,15 @@ const mapRes = (res) => {
         setIsLoading(false);
       
     } while ( result?.data?.pagination?.has_more );
+      }
+
+   
+    getData()
+    // console.log("Resutl ========>>>>>>>",mapRes(result.result) )
+    } catch (error) {
+      console.log("fetchtransaction error",error)
+    }
     
-    console.log("Resutl ========>>>>>>>",mapRes(result.result) )
   };
 
   const getValue = (tx: Transaction) => {
